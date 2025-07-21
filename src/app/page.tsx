@@ -34,16 +34,16 @@ const Home = () => {
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const response = await LoginAccount(loginAcc)
-
-		if (response === true) {
+		console.log(response)
+		if (response.alert === "succesfull login") {
 			setLoginAcc({
 				Username: "",
 				Password: "",
 			})
 			setMessage("Succesfully Login")
-		} else if (response === 401) {
+		} else if (response.error === "Password does not match") {
 			setMessage("Incorrect username or Password")
-		} else if (response === 404) {
+		} else if (response.error === "User not exist") {
 			setMessage("User not found")
 		}
 	}
@@ -71,7 +71,9 @@ const Home = () => {
 			setMessage("Password not match")
 		} else {
 			const response = await CreateAccount(createAcc)
-			if (response === true) {
+			if (response === 406) {
+				setMessage("Username Already Exist")
+			} else if (response === true) {
 				setCreateAccount({
 					Firstname: "",
 					Lastname: "",

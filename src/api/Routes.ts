@@ -37,3 +37,15 @@ export async function LoginAccount(account: Login) {
 
 	return result
 }
+
+export async function GetTodos() {
+	const response = await fetch("http://localhost:4000/task/get", {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+		credentials: "include",
+	})
+	const tasks = await response.json()
+
+	console.log(tasks)
+	return tasks
+}
