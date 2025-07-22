@@ -1,17 +1,11 @@
-import React from "react"
 import TodoList from "./todo-list"
-import { CircleUser } from "lucide-react"
 
-const Todo = async () => {
+import Nav from "./Nav"
+
+const Todo = () => {
 	return (
 		<div>
-			<div>
-				<h1>CARD MRI</h1>
-				<div>
-					<CircleUser />
-					<p></p>
-				</div>
-			</div>
+			<Nav />
 			<TodoList />
 		</div>
 	)
