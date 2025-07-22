@@ -4,6 +4,7 @@ import Input from "@/components/Input"
 import React, { useState } from "react"
 import { User, Lock, UserPlus, LogIn } from "lucide-react"
 import { CreateAccount, LoginAccount } from "@/api/Routes"
+import { useRouter } from "next/navigation"
 
 type Account = {
 	Firstname: string
@@ -17,6 +18,7 @@ type Login = {
 }
 
 const Home = () => {
+	const router = useRouter()
 	const [isLogin, setIsLogin] = useState<boolean>(true) // Explicit boolean type
 	const [loginAcc, setLoginAcc] = useState<Login>({
 		Username: "",
@@ -41,6 +43,7 @@ const Home = () => {
 				Password: "",
 			})
 			setMessage("Succesfully Login")
+			router.push("/todo")
 		} else if (response.error === "Password does not match") {
 			setMessage("Incorrect username or Password")
 		} else if (response.error === "User not exist") {
@@ -104,24 +107,23 @@ const Home = () => {
 				{/*Login Form*/}
 				{isLogin && (
 					<form onSubmit={handleLogin} className="space-y-5">
-						<>
-							<Input
-								type="text"
-								name="Username"
-								placeholder="Username"
-								value={loginAcc.Username}
-								onChange={(e) => handleChangeLogin(e)}
-								icon={User}
-							/>
-							<Input
-								type="password"
-								name="Password"
-								placeholder="Password"
-								value={loginAcc.Password}
-								onChange={(e) => handleChangeLogin(e)}
-								icon={Lock}
-							/>
-						</>
+						<Input
+							type="text"
+							name="Username"
+							placeholder="Username"
+							value={loginAcc.Username}
+							onChange={(e) => handleChangeLogin(e)}
+							icon={User}
+						/>
+						<Input
+							type="password"
+							name="Password"
+							placeholder="Password"
+							value={loginAcc.Password}
+							onChange={(e) => handleChangeLogin(e)}
+							icon={Lock}
+						/>
+
 						<Button type="submit" className="w-full">
 							{isLogin ? (
 								<>
@@ -139,49 +141,48 @@ const Home = () => {
 				{/*Registered Form*/}
 				{!isLogin && (
 					<form onSubmit={HandleRegisteredForm} className="space-y-5">
-						<>
-							<Input
-								type="text"
-								name="Username"
-								placeholder="Username"
-								value={createAcc.Username}
-								onChange={(e) => handleChangeRegistered(e)}
-								icon={User}
-							/>
-							<Input
-								type="password"
-								name="Password"
-								placeholder="Password"
-								value={createAcc.Password}
-								onChange={(e) => handleChangeRegistered(e)}
-								icon={Lock}
-							/>
+						<Input
+							type="text"
+							name="Username"
+							placeholder="Username"
+							value={createAcc.Username}
+							onChange={(e) => handleChangeRegistered(e)}
+							icon={User}
+						/>
+						<Input
+							type="password"
+							name="Password"
+							placeholder="Password"
+							value={createAcc.Password}
+							onChange={(e) => handleChangeRegistered(e)}
+							icon={Lock}
+						/>
 
-							<Input
-								type="password"
-								name="ConfirmedPassword"
-								placeholder="Confirm Password"
-								value={confirmPassword}
-								onChange={(e) => setConfirmPassword(e.target.value)}
-								icon={Lock}
-							/>
-							<Input
-								type="text"
-								name="Firstname"
-								placeholder="Firstname"
-								value={createAcc.Firstname}
-								onChange={(e) => handleChangeRegistered(e)}
-								icon={User}
-							/>
-							<Input
-								type="text"
-								name="Lastname"
-								placeholder="Lastname"
-								value={createAcc.Lastname}
-								onChange={(e) => handleChangeRegistered(e)}
-								icon={User}
-							/>
-						</>
+						<Input
+							type="password"
+							name="ConfirmedPassword"
+							placeholder="Confirm Password"
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+							icon={Lock}
+						/>
+						<Input
+							type="text"
+							name="Firstname"
+							placeholder="Firstname"
+							value={createAcc.Firstname}
+							onChange={(e) => handleChangeRegistered(e)}
+							icon={User}
+						/>
+						<Input
+							type="text"
+							name="Lastname"
+							placeholder="Lastname"
+							value={createAcc.Lastname}
+							onChange={(e) => handleChangeRegistered(e)}
+							icon={User}
+						/>
+
 						<Button type="submit" className="w-full">
 							{isLogin ? (
 								<>

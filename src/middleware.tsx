@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-const protectedRoutes = ["/dashboard"]
+const protectedRoutes = ["/todo"]
 
 export default function middleware(request: NextRequest) {
 	// Check if the current path is a protected route
@@ -19,8 +19,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: [
-		"/((?!api|_next/static|_next/image|.*\\.png$).*)",
-		"/dashboard/:path",
-	], // Match protected routes
+	matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)", "/todo/:path"], // Match protected routes
 }
