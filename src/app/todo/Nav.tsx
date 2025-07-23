@@ -1,7 +1,7 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { CircleUser } from "lucide-react"
-import { GetProfile } from "@/api/Routes"
+
 import { useTodoProfile } from "@/store/todoStore"
 
 const Nav = () => {
@@ -16,6 +16,7 @@ const Nav = () => {
 			<div>Card MRI</div>
 			<div className="flex gap-2">
 				<CircleUser />
+				<p>{profile.Firstname}</p>
 			</div>
 		</nav>
 	)

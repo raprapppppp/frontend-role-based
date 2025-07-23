@@ -10,8 +10,7 @@ type Task = {
 }
 
 const TodoList = () => {
-	const { tasks, setTasks, addTasks } = useTodoList()
-	//const [tasks, setTasks] = useState<Task[]>([])
+	const { tasks, setTasks, addTasks, deleteTasks, updateTask } = useTodoList()
 	const [newTodo, setNewTodo] = useState({
 		ID: 0,
 		Task: "",
@@ -25,9 +24,7 @@ const TodoList = () => {
 	const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		addTasks(newTodo)
-		/* const response = await CreateTask(newTodo)
 		setNewTodo((prev) => ({ ...prev, Task: "" }))
-		setTasks((prevData) => [...prevData, response]) */
 	}
 
 	const handleAddchange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,22 +32,13 @@ const TodoList = () => {
 		setNewTodo((prevdata) => ({ ...prevdata, [name]: value }))
 	}
 
-	const toggleComplete = async (task: Task) => {
-		/* const updatedTask = { ...task, Completed: !task.Completed }
-		setTasks((prevData) =>
-			prevData.map((t) => (t.ID === task.ID ? updatedTask : t))
-		)
-
-		const response = await UpdateTask(updatedTask)
-		console.log(response) */
+	const toggleComplete = (task: Task) => {
+		const upTask = { ...task, Completed: !task.Completed }
+		updateTask(upTask)
 	}
 
-	const deleteTodo = async (task: Task) => {
-		/* const response = await DeleteTask(task)
-		if (response.ok) {
-			const upDel = tasks.filter((prevData) => prevData.ID !== task.ID)
-			setTasks(upDel)
-		} */
+	const deleteTodo = (task: Task) => {
+		deleteTasks(task)
 	}
 
 	return (
