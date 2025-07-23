@@ -1,7 +1,6 @@
 "use client"
 
-import { CreateTask, DeleteTask, GetTodos, UpdateTask } from "@/api/Routes"
-
+import { useTodoList } from "@/store/todoStore"
 import React, { useEffect, useState } from "react"
 
 type Task = {
@@ -11,7 +10,8 @@ type Task = {
 }
 
 const TodoList = () => {
-	const [tasks, setTasks] = useState<Task[]>([])
+	const { tasks, setTasks, addTasks } = useTodoList()
+	//const [tasks, setTasks] = useState<Task[]>([])
 	const [newTodo, setNewTodo] = useState({
 		ID: 0,
 		Task: "",
@@ -19,18 +19,15 @@ const TodoList = () => {
 	})
 
 	useEffect(() => {
-		const tasks = async () => {
-			const allTask = await GetTodos()
-			setTasks(allTask)
-		}
-		tasks()
+		setTasks()
 	}, [])
 
-	const addTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+	const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		const response = await CreateTask(newTodo)
+		addTasks(newTodo)
+		/* const response = await CreateTask(newTodo)
 		setNewTodo((prev) => ({ ...prev, Task: "" }))
-		setTasks((prevData) => [...prevData, response])
+		setTasks((prevData) => [...prevData, response]) */
 	}
 
 	const handleAddchange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,47 +36,46 @@ const TodoList = () => {
 	}
 
 	const toggleComplete = async (task: Task) => {
+		/* const updatedTask = { ...task, Completed: !task.Completed }
 		setTasks((prevData) =>
-			prevData.map((taskss) =>
-				taskss.ID === task.ID
-					? { ...taskss, Completed: !taskss.Completed }
-					: taskss
-			)
+			prevData.map((t) => (t.ID === task.ID ? updatedTask : t))
 		)
-		console.log(task, "task")
-		const response = await UpdateTask(task)
-		console.log(response)
+
+		const response = await UpdateTask(updatedTask)
+		console.log(response) */
 	}
 
 	const deleteTodo = async (task: Task) => {
-		const response = await DeleteTask(task)
+		/* const response = await DeleteTask(task)
 		if (response.ok) {
 			const upDel = tasks.filter((prevData) => prevData.ID !== task.ID)
 			setTasks(upDel)
-		}
+		} */
 	}
 
 	return (
-		<div className="max-w-md max-h-screen  mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
-			<h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-				My To-Do List
-			</h1>
+		<div className="max-w-md max-h-[80vh] overflow-y-auto mx-auto mt-10 px-6 pb-6 bg-white rounded-lg shadow-xl">
+			<div className="sticky top-0 bg-white z-10 pt-6">
+				<h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+					To-Do List
+				</h1>
 
-			<form onSubmit={addTodo} className="flex mb-4">
-				<input
-					type="text"
-					name="Task"
-					value={newTodo.Task}
-					onChange={(e) => handleAddchange(e)}
-					placeholder="Add a new task..."
-					className="flex-grow p-3 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-				/>
-				<button
-					type="submit"
-					className="bg-blue-600 text-white px-5 py-3 rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-					Add
-				</button>
-			</form>
+				<form onSubmit={addTodo} className="flex mb-4">
+					<input
+						type="text"
+						name="Task"
+						value={newTodo.Task}
+						onChange={(e) => handleAddchange(e)}
+						placeholder="Add a new task..."
+						className="flex-grow p-3 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+					/>
+					<button
+						type="submit"
+						className="bg-blue-600 text-white px-5 py-3 rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+						Add
+					</button>
+				</form>
+			</div>
 
 			{tasks.length === 0 ? (
 				<p className="text-center text-gray-500">No tasks yet. Add some!</p>

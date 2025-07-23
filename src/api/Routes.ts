@@ -101,6 +101,5 @@ export async function GetProfile() {
 	})
 
 	const profile = await response.json()
-	console.log(profile)
 	return profile
 }
